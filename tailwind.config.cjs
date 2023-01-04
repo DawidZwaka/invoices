@@ -6,5 +6,7 @@ module.exports = {
       colors: {}, // Extend Tailwind's default colors
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 };
