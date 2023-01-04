@@ -24,12 +24,12 @@ export default async (app) => {
     /**
      * Matched files trigger a page reload when modified
      */
-    .watch(["resources/views/**/*", "app/**/*"])
+    .watch(["resources/**/*", "app/**/*"])
 
     /**
      * Proxy origin (`WP_HOME`)
      */
-    .proxy("http://example.test")
+    .proxy("http://createitsite.local/")
 
     /**
      * Development origin
