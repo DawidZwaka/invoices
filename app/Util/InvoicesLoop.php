@@ -3,8 +3,10 @@
 namespace App\Util;
 
 use App\Util\Loop;
-use WP_Post;
 use App\Enums\FieldTypes;
+use App\Options\Settings;
+
+use WP_Post;
 
 class InvoicesLoop extends Loop
 {
@@ -39,6 +41,22 @@ class InvoicesLoop extends Loop
                 [
                     'type' => FieldTypes::TEXT,
                     'text' => $fields['end_date'] ?: ''
+                ],
+                [
+                    'type' => FieldTypes::TEXT,
+                    'text' => Settings::currency . $fields['total'] ?: ''
+                ],
+                [
+                    'type' => FieldTypes::TEXT,
+                    'text' => Settings::currency . $fields['fees'] ?: ''
+                ],
+                [
+                    'type' => FieldTypes::TEXT,
+                    'text' => Settings::currency . $fields['transfer'] ?: ''
+                ],
+                [
+                    'type' => FieldTypes::TEXT,
+                    'text' => $fields['orders'] ?: ''
                 ],
             ],
         ];

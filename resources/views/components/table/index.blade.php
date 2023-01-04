@@ -1,16 +1,16 @@
-<table {{ $attributes->class(['w-full text-sm text-left text-gray-500 dark:text-gray-400']) }}>
+<table {{ $attributes->class(['w-full text-sm text-left bg-white border rounded-lg shadow']) }}>
     @isset($head)
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <thead class="text-[0.7rem] uppercase text-gray-500">
             {{ $head }}
         </thead>
     @endisset    
     @isset($body)
-        <tbody>
+        <tbody class="text-xs font-medium">
             {{ $body }}
         </tbody>
     @endisset
     @isset($foot)
-        <tfoot class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tfoot class="text-[0.7rem] uppercase">
             {{ $foot }}
         </tfoot>
     @endisset

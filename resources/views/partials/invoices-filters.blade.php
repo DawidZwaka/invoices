@@ -4,9 +4,9 @@ use App\Enums\StatusTypes;
 
 @endphp
 
-<form class="flex">
-    <div class="flex gap-5">
-        <x-form.fields.custom-radio name="status" value="">
+<form class="flex py-5 grow items-center gap-5 text-sm">
+    <div class="flex gap-2 text-xs">
+        <x-form.fields.custom-radio name="status" value="" checked>
             {{ __("All") }}
         </x-form.fields.custom-radio>
         <x-form.fields.custom-radio name="status" :value="StatusTypes::ONGOING">
@@ -20,7 +20,7 @@ use App\Enums\StatusTypes;
         </x-form.fields.custom-radio>
     </div>
 
-    <x-form.fields.range-datepicker/>
+    <x-form.fields.range-datepicker class="ml-auto"/>
 
     <x-form.fields.search />
 </form>

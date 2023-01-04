@@ -15,7 +15,7 @@
     <label 
         for="{{ $name . $value }}" 
         @class([
-            "flex p-2 text-gray-700 rounded-lg cursor-pointer",
+            "flex p-2 text-gray-700 rounded-lg cursor-pointer uppercase font-semibold",
             "peer-checked:text-white peer-checked:bg-gray-700",
             "hover:text-gray-600 hover:bg-gray-100"
         ])
