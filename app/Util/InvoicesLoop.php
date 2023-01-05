@@ -10,7 +10,7 @@ use WP_Post;
 
 class InvoicesLoop extends Loop
 {
-    const POSTS_PER_PAGE = 9;
+    const POSTS_PER_PAGE = 12;
     const action = 'fetch_invoices';
     const post_type = 'invoices';
 
@@ -31,36 +31,36 @@ class InvoicesLoop extends Loop
                 ],
                 [
                     'type' => FieldTypes::IMAGE_WITH_TEXT,
-                    'text' => get_the_title($fields['company']) ?: '',
-                    'image' => get_the_post_thumbnail($fields['company']),
+                    'text' => isset($fields['company']) ? get_the_title($fields['company']) : '-',
+                    'image' => isset($fields['company']) ? get_the_post_thumbnail($fields['company']) : '',
                 ],
                 [
                     'type' => FieldTypes::STATUS,
-                    'text' => $fields['status'] ?: ''
+                    'text' => $fields['status'] ?? ''
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => $fields['start_date'] ?: ''
+                    'text' => $fields['start_date'] ?? '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => $fields['end_date'] ?: ''
+                    'text' => $fields['end_date'] ?? '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => Settings::currency . $fields['total'] ?: ''
+                    'text' => isset($fields['total']) ? Settings::currency . $fields['total'] :  '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => Settings::currency . $fields['fees'] ?: ''
+                    'text' => isset($fields['fees']) ? Settings::currency . $fields['fees'] :  '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => Settings::currency . $fields['transfer'] ?: ''
+                    'text' => isset($fields['transfer']) ? Settings::currency . $fields['transfer'] :  '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => $fields['orders'] ?: ''
+                    'text' => $fields['orders'] ?? '-'
                 ],
             ],
         ];
