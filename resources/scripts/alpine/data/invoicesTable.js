@@ -1,34 +1,47 @@
 import { ajaxEndpoint } from '../../util/wp';
 
-export default (invoices) => ({
+export default (invoices, maxPage) => ({
     'list': [],
     'filtersForm': null,
     'loading': false,
     'action': 'fetch_invoices',
-    'page': 0,
+    'maxPage': 1,
+    'activePage': 1,
     init() {
         this.filtersForm = this.$refs.filtersForm;
-        console.log(invoices);
         this.list = invoices;
+        this.maxPage = maxPage;
 
         this.$watch('list', () => this.renderList());
     },
 
     onFilterChange() {
+        this.activePage = 1;
+        this.fetchItems();
+    },
+
+    onPaginationClick(index) {
+        this.activePage = index;
+
+        this.fetchItems();
+    },
+
+    fetchItems() {
         const formData = new FormData(this.filtersForm);
         
         this.loading = true;
 
         formData.append('action', this.action);
-        formData.append('page', this.page);
+        formData.append('page', this.activePage - 1);
 
         fetch(ajaxEndpoint, {
             method: "POST",
             body: formData,
         })
             .then(res => res.json())
-            .then(({items}) => {
+            .then(({items, maxPage}) => {
                 this.list = items;
+                this.maxPage = maxPage;
 
                 this.loading = false;
             });

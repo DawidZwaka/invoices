@@ -1,8 +1,6 @@
-@props([
-    'curr' => 1,
-    'max' => 24
-])
-
 <div>
-    {{ __("Page") }} {{ $curr }} {{ __("of") }} {{ $max }}
+    {{ __("Page") }}
+    <span x-text="activePage"></span> 
+    {{ __("of") }} 
+    <span x-text="maxPage"></span>
 </div>

@@ -3,9 +3,9 @@
 @section('content')
     <x-common.container 
         class='py-20'
-        x-data="invoicesTable({{ Js::from($invoices) }})"
+        x-data="invoicesTable({{ Js::from($invoices) }}, {{ Js::from($maxPage) }})"
     >
-        <h1>test</h1>
+        <h1>Invoices</h1>
         <div class="flex items-center gap-5">
             @include('partials.invoices-filters')
             <x-ui.button>

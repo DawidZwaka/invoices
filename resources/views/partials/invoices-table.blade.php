@@ -51,7 +51,7 @@ use App\Enums\FieldTypes;
                             </div>
                         </template>
                         <template x-if="field.type === {{ Js::from(FieldTypes::STATUS) }}">
-                            <x-ui.status-pill x-text="field.text"/>
+                            <x-ui.status-pill x-text="field.text" x-show="field.text"/>
                         </template>
                         </x-table.cell>
                     </template>
@@ -59,7 +59,7 @@ use App\Enums\FieldTypes;
         </template>
     </x-slot>
     <x-slot name="foot">
-        <x-table.cell colspan="100">
+        <x-table.cell colspan="100" x-show="maxPage > 0">
             <div class="w-full flex items-center justify-between">
                 <x-ui.page-index/>
                 <x-ui.pagination/>

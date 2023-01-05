@@ -31,14 +31,11 @@ abstract class Loop
             fn($item) => static::getItemData($item),
             $query->posts
         );
-
-        if (($currentPage + 1) * static::POSTS_PER_PAGE >= $query->found_posts) {
-            $loadMore = false;
-        }
-
+        
         wp_send_json([
             'items' => $resources,
-            'loadMore' => $loadMore
+            'maxPage' => $query->max_num_pages,
+            'activePage' => $query->page_id + 1
         ]);
     }
 
@@ -112,10 +109,9 @@ abstract class Loop
         );
     }
 
-    public static function loadMore($taxQuery = null): bool
+    public static function getMaxPage(): float
     {
-        $query = static::buildQuery(0, $taxQuery);
-
-        return $query->found_posts > static::POSTS_PER_PAGE;
+        return static::buildQuery()->max_num_pages;
     }
+
 }

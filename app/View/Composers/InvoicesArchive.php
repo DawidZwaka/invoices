@@ -25,8 +25,7 @@ class InvoicesArchive extends Composer
     {
         return [
             'invoices' => InvoicesLoop::getPosts(),
-            'maxPage' => 24,
-            'currentPage' => 1
+            'maxPage' => InvoicesLoop::getMaxPage(),
         ];
     }
 
