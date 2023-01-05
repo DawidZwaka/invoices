@@ -1,5 +1,10 @@
 import {domReady} from '@roots/sage/client';
 import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
+import Alpine from 'alpinejs';
+
+import invoicesTable from './alpine/data/invoicesTable';
+ 
+window.Alpine = Alpine;
 
 /**
  * app.main
@@ -15,10 +20,9 @@ const main = async (err) => {
   const dateRangePickerEl = document.querySelectorAll('[date-rangepicker]');
 
   dateRangePickerEl.forEach(el => {
-    console.log(el);
     if(el)
         new DateRangePicker(el, {
-            // options
+            format: 'dd/mm/yyyy',
         }); 
   });
 };
@@ -29,4 +33,6 @@ const main = async (err) => {
  * @see https://webpack.js.org/api/hot-module-replacement
  */
 domReady(main);
+Alpine.data('invoicesTable', invoicesTable);
+Alpine.start();
 import.meta.webpackHot?.accept(main);

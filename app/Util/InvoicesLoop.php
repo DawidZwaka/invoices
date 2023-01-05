@@ -14,6 +14,10 @@ class InvoicesLoop extends Loop
     const action = 'fetch_invoices';
     const post_type = 'invoices';
 
+    public function __construct() {
+        $this->registerAjaxListeners();
+    }
+
     public static function getItemData(WP_Post $item): array
     {
 
@@ -62,89 +66,40 @@ class InvoicesLoop extends Loop
         ];
     }
 
-    /**
-     * Gets the mapped version of WP_Post categories
-     *
-     * @param WP_Post|null $item
-     * @return array
-     */
-    public static function getItemCategories(?WP_Post $item): array
-    {
-        $categories = $item ? wp_get_post_categories($item->ID) : get_categories();
-
-        if (is_wp_error($categories) || empty($categories)) {
-            return [];
-        }
-
-        return array_map(
-            fn($cat) => ([
-                'name' => get_category($cat)->name,
-                'url' => static::getTaxUrl(get_category($cat))
-            ]),
-            $categories
-        );
-    }
-
-    /**
-     * Gets the mapped version of WP_Post tags
-     *
-     * @param WP_Post|null $item
-     * @return array
-     */
-    public static function getItemTags(?WP_Post $item): array
-    {
-        $tags = $item ? get_the_tags($item) : get_the_tags();
-
-        if (is_wp_error($tags) || false === $tags || empty($tags)) {
-            return [];
-        }
-
-        return array_map(
-            fn($tag) => ([
-                'name' => $tag->name,
-                'url' => static::getTaxUrl($tag)
-            ]),
-            $tags
-        );
-    }
-
-    public static function getTaxUrl($tax): string {
-        $blog_url = get_permalink( get_field('blog', 'options')['blog_link'] );
-
-        return add_query_arg([
-            $tax->taxonomy => $tax->term_id
-        ], $blog_url);
-    }
-
-    public static function getFilters(): array
-    {
-        $term_ids = static::getTermsFromRequest();
-
-        $cats = array_map(fn($cat) => [
-            'active' => in_array($cat->term_id, $term_ids),
-            'id' => $cat->term_id,
-            'name' => $cat->name,
-            'term_type' => $cat->taxonomy,
-            'slug' => $cat->slug,
-        ], get_terms(['taxonomy' => 'category', 'hide_empty' => true ]));
-
-        $tags = array_map(fn($cat) => [
-            'active' => in_array($cat->term_id, $term_ids),
-            'id' => $cat->term_id,
-            'name' => "#" . $cat->name,
-            'term_type' => $cat->taxonomy,
-            'slug' => $cat->slug,
-        ], get_terms(['taxonomy' => 'post_tag', 'hide_empty' => true ]));
-
-        return ["categories" => $cats, "tags" => $tags];
-    }
-
-    public static function getCurrentFilter(): array
-    {
-        $term = get_queried_object();
-
-        return [
-          'id' => $term->term_id,
+    public static function prepareMetaQueryData(): array {
+        $status = sanitize_text_field($_POST['status']);
+        $startDate = preg_replace("([^0-9/])", "", $_POST['start']);
+        $endDate = preg_replace("([^0-9/])", "", $_POST['end']);
+        $meta_query = [
+            'relation'      => 'AND',
         ];
+
+        if($status) {
+            $meta_query[] = [
+                'key'       => 'status',
+                'value'     => $status,
+                'compare'   => '='
+            ];
+        }
+
+        if($startDate) {
+            $meta_query[] = [
+                'key'       => 'start_date',
+                'value'     => date('Ydm',strtotime($startDate)),
+                'type'      => 'NUMERIC',
+                'compare'   => '<='
+            ];
+        }
+
+        if($endDate) {
+            $meta_query[] = [
+                'key'       => 'end_date',
+                'value'     => date('Ydm',strtotime($endDate)),
+                'type'      => 'NUMERIC',
+                'compare'   => '>='
+            ];
+        }
+
+        return $meta_query;
     }
 }

@@ -12,6 +12,11 @@ abstract class Loop
     const action = null;
     const post_type = null;
 
+    public function registerAjaxListeners() {
+        add_action('wp_ajax_nopriv_' . static::action, [$this, 'handleFetchItemsRequest']);
+        add_action('wp_ajax_' . static::action, [$this, 'handleFetchItemsRequest']);
+    }
+
     /**
      * @param WP_Query $query
      * @param int $currentPage
@@ -44,14 +49,27 @@ abstract class Loop
     public function handleFetchItemsRequest(): void
     {
         $currentPage = sanitize_text_field($_POST['page']);
+        $search = sanitize_text_field($_POST['search']);
 
         if (!isset($currentPage)) {
             wp_send_json_error('Page is undefined!', 422);
         }
 
-        $query = static::buildQuery($currentPage);
+        $query = static::buildQuery($currentPage, static::prepareMetaQueryData(), $search);
 
         $this->sendItems($query, $currentPage);
+    }
+
+    /**
+     * @return array
+     */
+    public static function prepareMetaQueryData(): array
+    {
+        try {
+            throw new Exception('You should implement this method!');
+        } catch (Exception $er) {
+            echo $er;
+        }
     }
 
     /**
@@ -72,16 +90,17 @@ abstract class Loop
      * @param array | null $tax_query
      * @return WP_Query
      */
-    public static function buildQuery(int $page = 0, array $tax_query = null): WP_Query
+    public static function buildQuery(int $page = 0, array $meta_query = null, string $search = null): WP_Query
     {
         return new WP_Query([
             'post_type' => static::post_type,
             'post_status' => 'publish',
+            's' => $search,
             'order' => 'DESC',
             'orderby' => 'date',
             'posts_per_page' => static::POSTS_PER_PAGE,
             'offset' => static::POSTS_PER_PAGE * $page,
-            'tax_query' => $tax_query,
+            'meta_query'    => $meta_query
         ]);
     }
 

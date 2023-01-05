@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Roots\Acorn\ServiceProvider;
+use App\Util\InvoicesLoop;
 
 class ThemeServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        new InvoicesLoop();
     }
 
     /**
@@ -23,6 +24,5 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 }

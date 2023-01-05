@@ -37,31 +37,26 @@ use App\Enums\FieldTypes;
         </x-table.row>
     </x-slot>
     <x-slot name="body">
-        @foreach ($invoices as $invoice)
+        <template x-for="item in list">
             <x-table.row>
-                @foreach ($invoice['fields'] as $field)                        
-                    <x-table.cell>
-                        @switch($field['type'])
-                            @case(FieldTypes::TEXT)
-                                {{ $field['text'] }}
-                            @break
-                            @case(FieldTypes::IMAGE_WITH_TEXT)
-                                <div>
-                                    {{ $field['text'] }}
-                                </div>
-                            @break
-                            @case(FieldTypes::STATUS)
-                                <div class="flex">
-                                    <x-ui.status-pill type="{{ $field['text'] }}">
-                                        {{ $field['text'] }}
-                                    </x-ui.status-pill>
-                                </div>
-                            @break
-                        @endswitch
-                    </x-table.cell>
-                @endforeach
+                    <template x-for="field in item.fields">
+                        <x-table.cell>
+                        <template x-if="field.type === {{ Js::from(FieldTypes::TEXT) }}">
+                            <div x-text="field.text"></div>
+                        </template>
+                        <template x-if="field.type === {{ Js::from(FieldTypes::IMAGE_WITH_TEXT) }}">
+                            <div class="flex items-center">
+                                <img class="rounded-full" />
+                                <div x-text="field.text"></div>
+                            </div>
+                        </template>
+                        <template x-if="field.type === {{ Js::from(FieldTypes::STATUS) }}">
+                            <x-ui.status-pill x-text="field.text"/>
+                        </template>
+                        </x-table.cell>
+                    </template>
             </x-table.row>
-        @endforeach
+        </template>
     </x-slot>
     <x-slot name="foot">
         <x-table.cell colspan="100">
