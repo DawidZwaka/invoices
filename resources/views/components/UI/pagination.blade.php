@@ -16,7 +16,7 @@
         x-show="activePage !== 1"
     >
       <a 
-        class="flex items-center px-1 ml-0 leading-tight cursor-pointer text-gray-500 bg-white border border-gray-300 rounded-l hover:bg-gray-100 hover:text-gray-700"
+        class="flex items-center px-1 ml-0 leading-tight cursor-pointer text-gray-500 border border-gray-300 rounded-l hover:bg-gray-100 hover:text-gray-700"
         x-on:click="() => {
                 if(min > 1)
                     --min;
@@ -34,10 +34,11 @@
                     x-on:click="() => {
                         active = i;
                         onPaginationClick(i);
+                        console.log(activePage, i);
                     }"
-                    class="px-3 py-2 leading-tight w-[2rem] text-gray-500 bg-white cursor-pointer border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                    class="px-3 py-2 leading-tight w-[2rem] text-gray-500 cursor-pointer border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
                     x-text="i"
-                    x-bind:class="activePage === i? 'bg-gray-300': ''"
+                    x-bind:class="activePage === i? 'bg-gray-400 text-gray-900': ''"
                 >
                 </a>
             </li>
@@ -47,7 +48,7 @@
         x-show="activePage < maxPage"
         >
       <a 
-        class="flex items-center px-1 leading-tight text-gray-500 bg-white cursor-pointer border border-gray-300 rounded-r hover:bg-gray-100 hover:text-gray-700"
+        class="flex items-center px-1 leading-tight text-gray-500 cursor-pointer border border-gray-300 rounded-r hover:bg-gray-100 hover:text-gray-700"
         x-on:click="() => {
                 if(min + maxElems <= maxPage)
                     ++min;
