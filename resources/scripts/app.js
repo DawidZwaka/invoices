@@ -1,9 +1,11 @@
 import {domReady} from '@roots/sage/client';
-import DateRangePicker from 'flowbite-datepicker/DateRangePicker';
 import Alpine from 'alpinejs';
 
 import invoicesTable from './alpine/data/invoicesTable';
  
+import initFlowbiteComponents from './vendros/flowbite';
+
+
 window.Alpine = Alpine;
 
 /**
@@ -17,15 +19,8 @@ const main = async (err) => {
 
   // application code
 
-  const dateRangePickerEl = document.querySelectorAll('[date-rangepicker]');
-
-  dateRangePickerEl.forEach(el => {
-    if(el)
-        new DateRangePicker(el, {
-            format: 'dd/mm/yyyy',
-        }); 
-  });
-};
+  initFlowbiteComponents();
+}
 
 /**
  * Initialize

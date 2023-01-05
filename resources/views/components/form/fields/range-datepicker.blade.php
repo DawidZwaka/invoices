@@ -3,8 +3,7 @@
 ])
 
 <div 
-    date-rangepicker  
-    datepicker-format="dd/mm/yyyy"       
+    rangepicker  
     @class([
         'flex items-center',
         $wrapperClasses

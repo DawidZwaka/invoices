@@ -26,13 +26,17 @@ class InvoicesLoop extends Loop
         return [
             'fields' => [
                 [
+                    'type' => FieldTypes::CHECKBOX,
+                    'text' =>  $item->ID
+                ],
+                [
                     'type' => FieldTypes::TEXT,
                     'text' => "#" . $item->ID
                 ],
                 [
                     'type' => FieldTypes::IMAGE_WITH_TEXT,
                     'text' => isset($fields['company']) ? get_the_title($fields['company']) : '-',
-                    'image' => isset($fields['company']) ? get_the_post_thumbnail($fields['company']) : '',
+                    'image' => isset($fields['company']) ? get_the_post_thumbnail_url($fields['company']) : '',
                 ],
                 [
                     'type' => FieldTypes::STATUS,

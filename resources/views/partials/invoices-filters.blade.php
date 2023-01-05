@@ -42,7 +42,7 @@ use App\Enums\StatusTypes;
 
     <x-form.fields.range-datepicker 
         wrapperClasses="ml-auto"
-        x-on:change.debounce.700ms="onFilterChange()"
+        x-on:focus.debounce.700ms="onFilterChange()"
     />
 
     <x-form.fields.search 
