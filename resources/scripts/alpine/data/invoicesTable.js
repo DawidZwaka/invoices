@@ -4,18 +4,16 @@ export default (invoices, maxPage) => ({
     'list': [],
     'filtersForm': null,
     'loading': false,
-    'action': 'fetch_invoices',
     'maxPage': 1,
     'activePage': 1,
     init() {
         this.filtersForm = this.$refs.filtersForm;
         this.list = invoices;
         this.maxPage = maxPage;
-
-        this.$watch('list', () => this.renderList());
     },
 
     onFilterChange() {
+
         this.activePage = 1;
         this.fetchItems();
     },
@@ -31,7 +29,7 @@ export default (invoices, maxPage) => ({
         
         this.loading = true;
 
-        formData.append('action', this.action);
+        formData.append('action', 'fetch_invoices');
         formData.append('page', this.activePage - 1);
 
         fetch(ajaxEndpoint, {
@@ -47,11 +45,32 @@ export default (invoices, maxPage) => ({
             });
     },
 
-    onMarkAsPaidClick() {
-
+    getCheckboxes() {
+        return document.querySelectorAll('[x-ref="markAsPaid"]');
     },
 
-    renderList() {
+    onMarkAsPaidClick() {
+        const checks = this.getCheckboxes();
+        const formData = new FormData(this.filtersForm);
+        
+        this.loading = true;
 
-    }
+        formData.append('action', 'invoice_mark_as_paid');
+
+        checks.forEach( check => {
+            formData.append('checks[]', check.value);
+        });
+
+        fetch(ajaxEndpoint, {
+            method: "POST",
+            body: formData,
+        })
+            .then(() => this.fetchItems());
+    },
+
+    onSelectAll() {
+        const checks = this.getCheckboxes();
+
+        checks.forEach( check => check.checked = this.$el.checked);
+    },
 });

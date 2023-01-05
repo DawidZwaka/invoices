@@ -8,6 +8,12 @@ use App\Enums\FieldTypes;
     <x-slot name="head">
         <x-table.row>
             <x-table.cell>
+                <x-form.fields.checkbox 
+                    name="mark_as_paid" 
+                    x-on:change="onSelectAll()"
+                />
+            </x-table.cell>
+            <x-table.cell>
                 {{ __("id") }}
             </x-table.cell>
             <x-table.cell>
@@ -41,13 +47,24 @@ use App\Enums\FieldTypes;
             <x-table.row>
                     <template x-for="field in item.fields">
                         <x-table.cell>
+                        <template x-if="field.type === {{ Js::from(FieldTypes::CHECKBOX) }}">
+                            <x-form.fields.checkbox 
+                                name="mark_as_paid"
+                                x-bind:value="field.text"
+                                x-ref="markAsPaid"
+                            />
+                        </template>
                         <template x-if="field.type === {{ Js::from(FieldTypes::TEXT) }}">
                             <div x-text="field.text"></div>
                         </template>
                         <template x-if="field.type === {{ Js::from(FieldTypes::IMAGE_WITH_TEXT) }}">
                             <div class="flex items-center">
-                                <img class="rounded-full" />
-                                <div x-text="field.text"></div>
+                                <img 
+                                    class="rounded-lg object-cover w-[2rem] h-[2rem] mr-2 bg-gray-300" 
+                                    x-bind:src="field.image"
+                                    x-show="field.image"
+                                />
+                                <div x-text="field.text" class="text-sm"></div>
                             </div>
                         </template>
                         <template x-if="field.type === {{ Js::from(FieldTypes::STATUS) }}">

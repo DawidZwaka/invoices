@@ -35,7 +35,7 @@ add_action( 'init', function () {
             'has_archive' => true,
             'rewrite' => array('slug' => 'companies'),
             'show_in_rest' => false,
-  
+            'supports' => array( 'title', 'thumbnail' )
         )
     );
 });

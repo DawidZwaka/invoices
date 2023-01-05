@@ -28,8 +28,4 @@ class InvoicesArchive extends Composer
             'maxPage' => InvoicesLoop::getMaxPage(),
         ];
     }
-
-    public function getInvoices() {
-        
-    }
 }

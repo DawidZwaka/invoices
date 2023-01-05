@@ -3,3 +3,7 @@
 @import 'tailwindcss/utilities';
 
 @import '../../node_modules/flowbite-datepicker/dist/css/datepicker.css';
+
+.hidden {
+    display: none !important;
+}
