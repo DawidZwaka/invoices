@@ -7,4 +7,5 @@ abstract class FieldTypes {
     const IMAGE_WITH_TEXT = 'text_with_text';
     const STATUS = 'status';
     const CHECKBOX = 'checkbox';
+    const DOWNLOAD = 'download';
 }

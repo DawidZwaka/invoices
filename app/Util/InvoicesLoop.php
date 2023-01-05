@@ -52,19 +52,23 @@ class InvoicesLoop extends Loop
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => isset($fields['total']) ? Settings::currency . $fields['total'] :  '-'
+                    'text' => isset($fields['total']) && $fields['total'] ? Settings::currency . $fields['total'] :  '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => isset($fields['fees']) ? Settings::currency . $fields['fees'] :  '-'
+                    'text' => isset($fields['fees']) && $fields['fees'] ? Settings::currency . $fields['fees'] :  '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
-                    'text' => isset($fields['transfer']) ? Settings::currency . $fields['transfer'] :  '-'
+                    'text' => isset($fields['transfer']) && $fields['transfer'] ? Settings::currency . $fields['transfer'] :  '-'
                 ],
                 [
                     'type' => FieldTypes::TEXT,
                     'text' => $fields['orders'] ?? '-'
+                ],
+                [
+                    'type' => FieldTypes::DOWNLOAD,
+                    'url' => $fields['file'] ?? null
                 ],
             ],
         ];

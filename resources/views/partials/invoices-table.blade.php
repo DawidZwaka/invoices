@@ -37,7 +37,7 @@ use App\Enums\FieldTypes;
             <x-table.cell>
                 {{ __("Transfer") }}
             </x-table.cell>
-            <x-table.cell>
+            <x-table.cell colspan="2">
                 {{ __("Orders") }}
             </x-table.cell>
         </x-table.row>
@@ -68,7 +68,19 @@ use App\Enums\FieldTypes;
                             </div>
                         </template>
                         <template x-if="field.type === {{ Js::from(FieldTypes::STATUS) }}">
-                            <x-ui.status-pill x-text="field.text" x-show="field.text"/>
+                            <div class="flex">
+                                <x-ui.status-pill x-text="field.text" x-show="field.text"/>
+                            </div>
+                        </template>
+                        <template x-if="field.type === {{ Js::from(FieldTypes::DOWNLOAD) }}">
+                            <a 
+                                class="text-orange-500 hover:text-orange-600"
+                                download
+                                x-bind:href="field.url" 
+                                x-show="field.url"
+                            >
+                                <x-icon.download />
+                            </a>
                         </template>
                         </x-table.cell>
                     </template>
