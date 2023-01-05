@@ -1,0 +1,1 @@
+export const ajaxEndpoint = '/wp-admin/admin-ajax.php';

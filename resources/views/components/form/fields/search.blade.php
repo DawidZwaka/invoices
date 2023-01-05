@@ -2,7 +2,7 @@
     'placeholder' => 'Search'
 ])
 
-<div {{ $attributes->merge([]) }}> 
+<div> 
     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
     <div class="relative">
         <button type="submit" class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -10,10 +10,12 @@
         </button>
         <input 
             type="search" 
+            name="search"
             id="default-search" 
             class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500" 
             placeholder="{{ __($placeholder) }}" 
             required
+            {{ $attributes->merge([]) }}
         >
     </div>
 </div>
